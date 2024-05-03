@@ -7,5 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-   protected $guarded = [];
+   public function up()
+   {
+       Schema::create('products', function (Blueprint $table) {
+           $table->id();
+           $table->string('name');
+           $table->string('image')->nullable();
+           $table->decimal('price', 8, 2);
+           $table->timestamps();
+       });
+   }
+
+   public function down()
+   {
+       Schema::dropIfExists('products');
+   }
 }
