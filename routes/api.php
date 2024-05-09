@@ -4,36 +4,34 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\VisitorController;
 use App\Http\Controllers\Admin\ContactController;
-use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Api\CategoryController;
 
 
 
 
-// Route::apiResource('products', ProductController::class);
+// Route::apiResource('products', ProductsController::class);
 //get visitor
-Route::get('/getVisitor', [VisitorController::class, 'GetVisitorDetails']);
+// Route::get('/getVisitor', [VisitorController::class, 'GetVisitorDetails']);
 //contact page router
 
-Route::post('/postcontact', [ContactController::class, 'PostContactDetails']);
+// Route::post('/postcontact', [ContactController::class, 'PostContactDetails']);
 
-Route::post('/addProduct', [ProductController::class, 'addProduct']);
-// Route::post('/list', [ProductController::class, 'list']);
-Route::get('/list', [ProductController::class, 'list']);
+Route::post('/addProduct', [ProductsController::class, 'addProduct']);
+// Route::post('/list', [ProductsController::class, 'list']);
+Route::get('/list', [ProductsController::class, 'list']);
 
-Route::delete('delete/{id}', [ProductController::class, 'delete']);
-Route::get('product/{id}', [ProductController::class, 'getProduct']);
-Route::get('edit/{id}', [ProductController::class, 'edit']);
+Route::delete('delete/{id}', [ProductsController::class, 'delete']);
+Route::get('product/{id}', [ProductsController::class, 'listByID']);
+Route::patch('update/{id}', [ProductsController::class, 'updateProduct']);
 
-// Route::get('update/{id}', [ProductController::class, 'update']);
+// Route::get('edit/{id}', [ProductsController::class, 'edit']);
 
-
-// api.php
-Route::patch('update/{id}', [ProductController::class, 'update']);
-Route::get('search/{key}', [ProductController::class, 'search']);
+Route::get('/search', [ProductsController::class, 'search']);
 Route::post('/login', [UserController::class, 'login']);
-Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/logout', [UserController::class, 'logout']);
+// Route::get('/categories', [CategoryController::class, 'index']);
 
 
 ?>

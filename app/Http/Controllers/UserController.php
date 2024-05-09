@@ -34,4 +34,32 @@ class UserController extends Controller
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
     }
+
+     // Logout method
+     public function logout(Request $request)
+     {
+        // Attempt to invalidate the user's session
+        Auth::logout();
+
+        // Optionally, you can revoke the user's token if you are using token-based authentication
+        // Auth::user()->currentAccessToken()->delete();
+
+        // Return a success response
+        return response()->json(['message' => 'User logged out successfully'], 200);
+    }
+//      {
+//          // Check if the user is authenticated
+//          if (Auth::check()) {
+//              // Revoke the user's token
+//              $request->user()->currentAccessToken()->delete();
+ 
+//              // You can perform additional actions here, such as logging the user's logout activity
+ 
+//              // Return a success response
+//              return response()->json(['message' => 'User logged out successfully'], 200);
+//          } else {
+//              // If the user is not authenticated, return an error response
+//              return response()->json(['message' => 'User is not logged in'], 401);
+//          }
+//      }
 }
