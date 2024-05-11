@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
@@ -29,17 +31,24 @@ class ProductsController extends Controller
             'name' => 'required|string',
             'image' => 'nullable|image|max:2048',
             'price' => 'required|numeric|min:0',
+            'description' => 'required|string',
         ]);
 
         // Create a new product instance...
         $product = new Product;
         $product->name = $validatedData['name'];
         $product->price = $validatedData['price'];
+        $product->description = $validatedData['description'];
 
         // Handle product image upload...
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('product_images');
-            $product->image = $imagePath;
+            // $imagePath = $request->file('image')->store('product_images');
+            // $fullImagePath = storage_path('app/' . $imagePath);
+            
+            $imageName = Str::random() . '.' . $request->image->getClientOriginalExtension();
+            Storage::disk('public')->putFileAs('product_images', $request->image, $imageName);
+
+            $product->image = $imageName;
         }
 
         // Save the product to the database...
@@ -76,12 +85,14 @@ class ProductsController extends Controller
             'name' => 'required|string',
             'image' => 'nullable|image|max:2048',
             'price' => 'required|numeric|min:0',
+            'description' => 'required|string',
         ]);
 
         // Find the product by ID...
         $product = Product::findOrFail($id);
         $product->name = $validatedData['name'];
         $product->price = $validatedData['price'];
+        $product->description = $validatedData['description'];
 
         // Handle product image update...
         if ($request->hasFile('image')) {

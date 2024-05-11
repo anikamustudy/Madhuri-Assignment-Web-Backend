@@ -31,6 +31,9 @@ Route::patch('update/{id}', [ProductsController::class, 'updateProduct']);
 Route::get('/search', [ProductsController::class, 'search']);
 Route::post('/login', [UserController::class, 'login']);
 Route::get('/logout', [UserController::class, 'logout']);
+Route::get('/home', [UserController::class, 'home']);
+
+
 // Route::get('/categories', [CategoryController::class, 'index']);
 
 
