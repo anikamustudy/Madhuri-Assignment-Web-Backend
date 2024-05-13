@@ -42,12 +42,8 @@ class ProductsController extends Controller
 
         // Handle product image upload...
         if ($request->hasFile('image')) {
-            // $imagePath = $request->file('image')->store('product_images');
-            // $fullImagePath = storage_path('app/' . $imagePath);
-            
             $imageName = Str::random() . '.' . $request->image->getClientOriginalExtension();
-            Storage::disk('public')->putFileAs('product_images', $request->image, $imageName);
-
+            $request->image->move('product/images', $imageName);
             $product->image = $imageName;
         }
 
@@ -58,7 +54,7 @@ class ProductsController extends Controller
             'message' => $message,
             'product' => $product,
         ];
-    
+
         // Return a JSON response with status code 201
         return response()->json($responseData, 201);
     }
@@ -96,8 +92,13 @@ class ProductsController extends Controller
 
         // Handle product image update...
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('product_images');
-            $product->image = $imagePath;
+            // $imagePath = $request->file('image')->store('product_images');
+            // $fullImagePath = storage_path('app/' . $imagePath);
+            
+            $imageName = Str::random() . '.' . $request->image->getClientOriginalExtension();
+            Storage::disk('public')->putFileAs('product_images', $request->image, $imageName);
+
+            $product->image = $imageName;
         }
 
         // Save the updated product to the database...
@@ -112,6 +113,7 @@ class ProductsController extends Controller
     
         // Return a JSON response with status code 200
         return response()->json($responseData, 200);
+        
     }
 
     // Remove the specified product from the database.

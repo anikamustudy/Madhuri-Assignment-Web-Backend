@@ -24,6 +24,7 @@ Route::get('/list', [ProductsController::class, 'list']);
 
 Route::delete('delete/{id}', [ProductsController::class, 'delete']);
 Route::get('product/{id}', [ProductsController::class, 'listByID']);
+
 Route::patch('update/{id}', [ProductsController::class, 'updateProduct']);
 
 // Route::get('edit/{id}', [ProductsController::class, 'edit']);
